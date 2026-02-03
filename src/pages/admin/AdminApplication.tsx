@@ -92,13 +92,13 @@ export default function AdminApplication() {
   function saveNotes() {
     flashSaved("Notes saved");
   }
+function scheduleInterview(dt: string) {
+  if (!dt) return;
+  updateApplication(applicationId as string, { interviewDateTime: dt });
+  moveStatus(applicationId as string, "INTERVIEW_SCHEDULED");
+  flashSaved("Interview scheduled");
+}
 
-  function scheduleInterview(dt: string) {
-    // dt comes from datetime-local input (e.g., "2026-02-05T10:30")
-    updateApplication(applicationId as string, { interviewDateTime: dt });
-    moveStatus(applicationId as string, "INTERVIEW_SCHEDULED");
-    flashSaved("Interview scheduled");
-  }
 
   function generateOffer() {
     if (!app) return;
