@@ -1,73 +1,64 @@
-# React + TypeScript + Vite
+# HireLink — Frontend Assessment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+HireLink is a client-side hiring workflow demo featuring:
 
-Currently, two official plugins are available:
+- Public job listings
+- Multi-step candidate application wizard (validated per step)
+- Admin pipeline (Applied → Reviewed → Interview Scheduled → Offer Sent)
+- Candidate review panel (score, notes, interview scheduling, offer drafting)
+- Persistence via browser localStorage
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## React Compiler
+- React + TypeScript (Vite)
+- React Router (client-side routing)
+- Zustand (state management + localStorage persistence)
+- React Hook Form + Zod (form state + validation)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## How to Run
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Key Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Candidate flow
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Browse roles on `/`
+- Apply via multi-step wizard on `/jobs/:jobId/apply`
+- Step-by-step validation (each step must pass before advancing)
+- Resume upload validation (PDF/DOC/DOCX, size limit)
+- Application ID generated on frontend and shown on Thank You page
+
+### Recruiter flow
+
+- Admin pipeline board at `/admin`
+- Search, filters (role, min score), sorting
+- Stage movement controls
+- Candidate review panel at `/admin/applications/:applicationId`
+- Score (1–5) + notes persistence
+- Interview scheduling auto-moves to Interview Scheduled
+- Offer draft generation auto-moves to Offer Sent
+
+## Persistence
+
+Applications are stored in localStorage under:
 ```
+hirelink.applications.v1
+```
+
+Refreshing the page retains all applications and recruiter updates.
+
+## Architecture Notes
+
+- `src/types/domain.ts` defines the domain model (Job, Application, statuses)
+- `src/store/applicationsStore.ts` is the single source of truth
+- UI is built with lightweight global CSS + reusable layout components (no external UI kit)
+
+## Tradeoffs / Future Improvements
+
+- Add authentication/role-based access for admin
+- Drag-and-drop pipeline (e.g., dnd-kit) for stage movement
+- Store actual resume file contents or upload to a backend
+- Better date formatting + timezone normalization
