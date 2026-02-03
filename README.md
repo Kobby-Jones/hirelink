@@ -1,4 +1,4 @@
-# HireLink — Frontend Assessment
+# HireLink
 
 HireLink is a client-side hiring workflow demo featuring:
 
