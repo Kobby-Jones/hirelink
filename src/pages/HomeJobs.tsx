@@ -1,38 +1,38 @@
 import { Link } from "react-router-dom";
+import Layout from "../components/Layout";
 import { JOBS } from "../data/jobs";
 
 export default function HomeJobs() {
   return (
-    <div style={{ maxWidth: 900, margin: "40px auto", padding: 16 }}>
-      <header style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-        <div>
-          <h1 style={{ margin: 0 }}>HireLink</h1>
-          <p style={{ marginTop: 6 }}>
-            Browse open roles and submit your application.
-          </p>
-        </div>
-        <Link to="/admin">Recruiter Admin →</Link>
-      </header>
-
-      <hr style={{ margin: "16px 0" }} />
-
-      <div style={{ display: "grid", gap: 12 }}>
+    <Layout
+      title="HireLink"
+      subtitle="Browse roles and submit a structured application."
+      right={<span className="badge">Client-side • Persisted • Routed</span>}
+    >
+      <div className="grid jobs">
         {JOBS.map((job) => (
-          <div
-            key={job.id}
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: 12,
-              padding: 16,
-            }}
-          >
-            <h3 style={{ margin: 0 }}>{job.title}</h3>
-            <div style={{ opacity: 0.8, marginTop: 4 }}>{job.location}</div>
-            <p style={{ marginTop: 10 }}>{job.shortDescription}</p>
-            <Link to={`/jobs/${job.id}/apply`}>Apply →</Link>
+          <div key={job.id} className="card jobCard">
+            <div className="hStack" style={{ justifyContent: "space-between" }}>
+              <div>
+                <div className="badge">{job.location}</div>
+                <h3 style={{ margin: "10px 0 6px" }}>{job.title}</h3>
+                <p style={{ margin: 0, color: "var(--muted)" }}>
+                  {job.shortDescription}
+                </p>
+              </div>
+            </div>
+
+            <hr className="hr" />
+
+            <div className="hStack" style={{ justifyContent: "space-between" }}>
+              <Link className="button primary" to={`/jobs/${job.id}/apply`}>
+                Apply →
+              </Link>
+              <span className="help">Takes ~2 minutes</span>
+            </div>
           </div>
         ))}
       </div>
-    </div>
+    </Layout>
   );
 }
