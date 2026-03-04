@@ -18,12 +18,21 @@ export default function Layout(props: {
         </div>
         <div className="hStack">
           {right}
-          <Link className="button" to="/">
+          <Link
+            className="button"
+            to="/"
+            style={{ fontSize: 13, padding: "7px 14px" }}
+          >
             Public
           </Link>
-          <Link className="button" to="/admin">
-            Admin
+          <Link
+            className="button primary"
+            to="/admin"
+            style={{ fontSize: 13, padding: "7px 14px" }}
+          >
+            Admin →
           </Link>
+          <Link className="button" to="/flowchart">Flowchart</Link>
         </div>
       </div>
       {children}

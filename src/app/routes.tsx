@@ -4,6 +4,8 @@ import AdminBoard from "../pages/admin/AdminBoard";
 import ApplyWizard from "../pages/ApplyWizard";
 import ThankYou from "../pages/ThankYou";
 import AdminApplication from "../pages/admin/AdminApplication";
+import HireLinkFlowchart from "../pages/HireLinkFlowchart";
+
 
 export const router = createBrowserRouter([
   { path: "/", element: <HomeJobs /> },
@@ -12,4 +14,5 @@ export const router = createBrowserRouter([
 
   { path: "/admin", element: <AdminBoard /> },
   { path: "/admin/applications/:applicationId", element: <AdminApplication /> },
+  { path: "/flowchart", element: <HireLinkFlowchart /> },
 ]);

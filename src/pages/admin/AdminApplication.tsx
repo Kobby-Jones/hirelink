@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-
 import Layout from "../../components/Layout";
 import { JOBS } from "../../data/jobs";
 import { useApplicationsStore } from "../../store/applicationsStore";
@@ -281,13 +280,22 @@ function scheduleInterview(dt: string) {
                   <div className="help" style={{ marginBottom: 10 }}>
                     Rate candidate from 1 (weak) to 5 (strong).
                   </div>
-                  <div className="hStack">
+                  <div className="hStack" style={{ gap: 8 }}>
                     {[1, 2, 3, 4, 5].map((n) => (
                       <button
                         key={n}
                         type="button"
-                        className={`button ${app.score === n ? "primary" : ""}`}
                         onClick={() => setScore(n as 1 | 2 | 3 | 4 | 5)}
+                        style={{
+                          width: 40, height: 40, borderRadius: "50%",
+                          border: `1px solid ${app.score === n ? "rgba(232,164,74,0.55)" : "var(--border-2)"}`,
+                          background: app.score === n ? "var(--accent-dim)" : "var(--surface-2)",
+                          color: app.score === n ? "var(--accent)" : "var(--text-2)",
+                          fontFamily: "var(--font-mono)", fontSize: 14, cursor: "pointer",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          transition: "all 140ms ease",
+                          boxShadow: app.score === n ? "0 0 16px var(--accent-glow)" : "none",
+                        }}
                       >
                         {n}
                       </button>
